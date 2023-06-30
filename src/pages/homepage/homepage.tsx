@@ -4,6 +4,7 @@ import {
   ExclamationCircleOutlined,
   EyeOutlined,
   PushpinOutlined,
+  SearchOutlined,
   StarOutlined,
 } from "@ant-design/icons";
 import avatar from "../../assets/images/avatar.jpg";
@@ -34,10 +35,13 @@ export default function Homepage() {
     setSelectedRepository(null);
   };
 
+  const handleOnSearchClick = () => {
+    window.open("https://www.google.com/search?q=cesare+emiliano", "_blank");
+  };
+
   useEffect(() => {
     GithubRepository.getPublicRepositories("CesareIsHere").then(
       (repositories) => {
-        console.log("repo:" + repositories);
         setRepositories(repositories);
         setIsLoading(false);
       }
@@ -46,21 +50,57 @@ export default function Homepage() {
 
   return (
     <>
-      <body className="h-full min-h-screen w-screen">
+      <body className="w-fit">
         <div className="flex flex-col items-center p-6">
-          <div className="border-red-600 border-2 rounded-full p-0.5">
-            <Avatar shape="circle" size={172} src={avatar} />
-          </div>
-          <div className="flex flex-col items-center mt-4">
-            <h1 className="text-4xl font-bold">Cesare Emiliano</h1>
-            <h2 className="text-2xl font-semibold">Software Developer</h2>
-            <div className="flex flex-row items-center">
-              <Space>
-                <PushpinOutlined className="text-2xl text-gray-500" />
-                <h3 className="text-2xl font-semibold text-gray-500">
-                  Bitonto, IT
-                </h3>
-              </Space>
+          <div className="flex flex-col items-center h-screen w-screen">
+            <div className="border-red-600 border-2 rounded-full p-0.5">
+              <Avatar shape="circle" size={172} src={avatar} />
+            </div>
+            <div className="flex flex-col items-center mt-4">
+              <h1 className="text-4xl font-bold">Cesare Emiliano</h1>
+              <h2 className="text-2xl font-semibold">Software Developer</h2>
+              <div className="flex flex-row items-center">
+                <Space>
+                  <PushpinOutlined className="text-2xl text-gray-500" />
+                  <h3 className="text-2xl font-semibold text-gray-500">
+                    Bitonto, IT
+                  </h3>
+                </Space>
+              </div>
+            </div>
+            <div className="flex flex-row items-center m-8 w-full justify-center">
+              <div className="flex flex-row items-center border-2 border-gray-300 rounded-full p-2 justify-center w-2/4">
+                <input
+                  className=" bg-transparent outline-none p-4 w-full caret-red-200 caret-gray-300 text-xl"
+                  placeholder="Come ti posso aiutare?"
+                  onKeyDown={(event) =>
+                    event.key === "Enter" && handleOnSearchClick()
+                  }
+                />
+                <SearchOutlined
+                  className="text-xl text-gray-500 pr-4"
+                  onClick={handleOnSearchClick}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col items-center justify-center h-60"></div>
+            <div className="flex flex-col items-center">
+              <h1 className="text-4xl font-bold">Skills</h1>
+              <br />
+              <svg
+                className="animate-bounce w-6 h-6 text-gray-9s00"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2.5"
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                ></path>
+              </svg>
             </div>
           </div>
           <div className="flex flex-wrap justify-center items-center  w-3/4 p-4">
@@ -76,7 +116,10 @@ export default function Homepage() {
             />
             <SkillsCard
               title="Back-End Skills"
-              skills={[{ name: "Dart", color: "orange" }]}
+              skills={[
+                { name: "Dart", color: "orange" },
+                { name: "Typescript", color: "purple" },
+              ]}
             />
             <SkillsCard
               title="Data Analysis Skills"
@@ -88,7 +131,7 @@ export default function Homepage() {
             <SkillsCard
               title="Cloud Computing Skills"
               skills={[
-                { name: "Google Cloud", color: "orange-inverse" },
+                { name: "Google Cloud Platform", color: "orange-inverse" },
                 { name: "Microsoft Azure", color: "blue" },
               ]}
             />
@@ -115,7 +158,7 @@ export default function Homepage() {
           </div>
 
           <div className="flex flex-col items-center justify-center mt-24">
-            <h1 className="text-4xl font-bold">Projects</h1>
+            <h1 className="text-4xl font-bold">Github repositories</h1>
             {isLoading ? (
               <div className="flex flex-wrap justify-center mt-4 w-screen">
                 Caricamento...
